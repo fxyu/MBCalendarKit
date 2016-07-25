@@ -60,6 +60,7 @@
         _dot = [UIView new];
         [_dot setHidden:YES];
         _showDot = NO;
+        
     }
     return self;
 }
@@ -282,6 +283,25 @@
 - (void)setOutOfRange
 {
     [self setState:CKCalendarMonthCellStateOutOfRange];
+}
+
+#pragma mark - VT3
+
+-(void)setSquareColor:(UIColor *)color
+{
+    if (color == nil){
+        [_squareView removeFromSuperview];
+        return;
+    }
+    
+    CGFloat selfHeight = [self frame].size.height;
+    CGFloat selfWidth = [self frame].size.width;
+    
+    CGRect squareFrame = CGRectMake(0, 0, selfWidth/3, selfHeight/3);
+    _squareView = [[UIView alloc] initWithFrame:squareFrame];
+    [_squareView setBackgroundColor:color];
+    
+    [self addSubview:_squareView];
 }
 
 @end

@@ -58,7 +58,7 @@
     _timeZone = nil;
     _date = [NSDate date];
     
-    NSDateComponents *components = [_calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:_date];
+    NSDateComponents *components = [_calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:_date];
     _date = [_calendar dateFromComponents:components];
     
     _displayMode = CKCalendarViewModeMonth;
@@ -468,6 +468,24 @@
                 [cell setShowDot:NO];
             }
             
+            /* Edit for display Top-left Square */
+            if([[self dataSource] respondsToSelector:@selector(calendarView:colorForDate:)])
+            {
+                [cell.squareView removeFromSuperview];
+                
+                UIColor *squareColor = [[self dataSource] calendarView:self colorForDate:workingDate];
+                if (squareColor != nil){
+                    [cell setSquareColor:squareColor];
+                }
+                else{
+                    [cell setSquareColor:nil];
+                }
+            }
+            else
+            {
+                [cell setSquareColor:nil];
+            }
+            
             /* STEP 6: Set the index */
             [cell setIndex:cellIndex];
             
@@ -662,7 +680,7 @@
         date = [NSDate date];
     }
     
-    NSDateComponents *components = [self.calendar components:NSCalendarUnitYear | NSCalendarUnitMonth | NSCalendarUnitDay fromDate:date];
+    NSDateComponents *components = [self.calendar components:NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit fromDate:date];
     date = [self.calendar dateFromComponents:components];
 
     BOOL minimumIsBeforeMaximum = [self _minimumDateIsBeforeMaximumDate];
@@ -898,7 +916,7 @@
         date = [[self calendar] dateByAddingWeeks:1 toDate:date];                   //  Add a week
         
         NSUInteger dayOfWeek = [[self calendar] weekdayInDate:date];
-        date = [[self calendar] dateBySubtractingDays:dayOfWeek-self.calendar.firstWeekday fromDate:date];   //  Jump to sunday
+        date = [[self calendar] dateBySubtractingDays:dayOfWeek-1 fromDate:date];   //  Jump to sunday
         
         //  If today is in the visible week, jump to today
         if ([[self calendar] date:date isSameWeekAs:today]) {
@@ -1068,9 +1086,6 @@
     if(nil != event.image)
     {
         cell.imageView.image = [UIImage imageWithData:event.image];
-    }
-    else {
-        cell.imageView.image = nil;
     }
     
     [cell addSubview:colorView];

@@ -14,9 +14,8 @@
 @protocol CKCalendarViewDataSource <NSObject>
 
 - (NSArray *)calendarView:(CKCalendarView *)calendarView eventsForDate:(NSDate *)date;
+- (UIColor *)calendarView:(CKCalendarView *)calendarView colorForDate:(NSDate *)date;
 
 @end
-
-
 
 #endif

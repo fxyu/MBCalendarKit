@@ -56,4 +56,9 @@
 - (void)setDeselected;  //  Deselect the cell
 - (void)setOutOfRange;  //  Deselect and style to show that the cell isn't selectable
 
+#pragma mark - Top-left SquareView
+
+@property (nonatomic, strong) UIView *squareView;
+- (void)setSquareColor:(UIColor *)color;
+
 @end

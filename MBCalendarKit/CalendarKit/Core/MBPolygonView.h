@@ -10,9 +10,6 @@
 
 @interface MBPolygonView : UIView
 
-// Appearance
-@property (nonatomic, strong) UIColor *fillColor UI_APPEARANCE_SELECTOR;
-
 //
 //
 //
